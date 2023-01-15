@@ -21,11 +21,6 @@
 <?php
 if (array_key_exists ("username", $_GET)) {
 	require ("debug.php");
-	// From http://php.net/manual/en/mongodb.tutorial.library.php
-	// Security
-	// http://php.net/manual/en/mongodb.security.request_injection.php
-	// q[$ne]=foo
-
 	$username = $_GET['username'];
 	$type = $_GET['type'];
 
@@ -45,8 +40,6 @@ if (array_key_exists ("username", $_GET)) {
 			</p>
 			<?php
 		}
-
-		print "<!--" ; var_dump_pre ($user); print "-->";
 		$row_count++;
 	}
 
@@ -63,14 +56,5 @@ if (array_key_exists ("username", $_GET)) {
 	<input type="submit" value="Guess" />
 </form>
 
-	<h2>Solutions</h2>
-	<p id="show"><a href="#" onclick="show_notes()">Show</a></p>
-	<p id="notes" class="hidden">
-		If we want this to be a little easier and only need one field attacking then make the username
-		field a regex by adding [$regex] to the find and then have them attack the "hidden" type
-		value instead.<br />
-		<a href="/user_lookup.php?type[$ne]=user&username[$ne]=robin">Not Equals Solution</a><br />
-		<a href="/user_lookup.php?type[$regex]=.*&username[$regex]=.*">Regex Solution</a>
-	</p>
 </body>
 </html>

@@ -1,13 +1,14 @@
-FROM php:7.0-apache
+FROM php:7.2-apache
 MAINTAINER jose nazario <jose@monkey.org>
 LABEL version="1.0" description="nosqli-labs Docker image"
 
 # modifying from https://hub.docker.com/r/spittet/php-mongodb/
-
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
-    echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list  && \
-	apt-get -qq update && \
-    apt-get install -y mongodb-org --no-install-recommends && \
+RUN apt update 
+RUN apt install -y gpg wget
+RUN wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add - 
+RUN echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+RUN apt-get -qq update && \
+    apt-get install -y mongodb-org && \
 	apt-get install -y libssl-dev unzip && \
     pecl install mongodb && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \	
